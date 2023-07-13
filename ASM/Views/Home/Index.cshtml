@@ -1,0 +1,108 @@
+﻿@*@{
+    ViewData["Title"] = "Home Page";
+}*@
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+@model IEnumerable<ASM.Models.MonAn>;
+@{
+    Layout = "~/Views/Shared/_WebLayout.cshtml";
+}
+<style>
+    .list-product {
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .product {
+        margin-top: 10px;
+        margin-right: 10px;
+        width: 205px;
+    }
+
+    .img {
+        width: 150px;
+        display: block;
+        margin: auto;
+    }
+
+    .title {
+        color: #0e0e0e;
+        display: block;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        height: 60px;
+    }
+
+    .field-price {
+        font-size: 24px;
+        color: #d50000;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .viewProduct, .addProduct {
+        border: 0;
+        font-weight: 700;
+        padding: 9px 5px;
+        background: #ffd800;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        display: block;
+        width: 186px;
+        margin: 0 auto;
+        color: #0e0e0e;
+    }
+    .addProduct {
+        margin-left: 2px;
+    }
+</style>
+
+<div class="list-product">
+    @foreach(var item in Model)
+    {
+        <div class="product">
+            <img src="~/images/@item.Hinh" class="img-responsive" style="width: 100%">
+            <span class="title">@item.Name</span>
+            <div class="field-price" href="javascript:format()">@item.Gia VNĐ</div>
+            <a class="addProduct text-center" href="javascript:addCart(@item.MonAnId);">
+                Thêm @*<img id="imgBusy_@item.MonAnId" src="~/images/busy.png" style="display: none">*@
+            </a>
+            <a class="btn btn-outline-secondary" asp-action="DetailsMonAn" asp-route-id="@item.MonAnId">Chi tiết</a>
+        </div>
+    }
+</div>
+
+<script>
+    function format(){
+        const price = document.getElementsByClassName("field-price");
+        const VND = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        });
+        VND.format(price);
+        
+    };
+    function addCart(id){
+        $("imgCart").attr("src", '/images/cartA.png');
+        $("imgBusy_" + id).show();
+        setTimeout(function(){
+            $.ajax({
+                url: "/Home/AddCart?Id=" + id,
+                type: "Post",
+                //success: function(result){
+                //    alert("Thêm đơn hàng thành công.");
+                //},
+                error: function(e){
+                    alert(this.url);
+                }
+            });
+            $("#imgBusy_" + id).hide();
+        }, 500);
+    }
+</script>

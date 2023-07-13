@@ -1,0 +1,31 @@
+﻿@using ASM.Models
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions
+@using ASM.Constant
+
+@{
+	string userName = Context.Session.GetString(SessionKey.Nguoidung.UserName) ?? "";
+}
+@{
+	string fullName = Context.Session.GetString(SessionKey.Nguoidung.FullName) ?? "";
+}
+
+<ul class="navbar-nav">
+    @if (userName != null && userName != "")
+    {
+        <li class="nav-item">
+            <a id="manage" class="nav-link text-dark">Hello @fullName!</a>
+        </li>
+        <li class="nav-item">
+            <form asp-area="" asp-controller="Admin" asp-action="Logout" method="post" id="logoutForm">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Đăng xuất</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="login" href="/Admin/Login">Đăng nhập</a>
+        </li>
+    }
+</ul>

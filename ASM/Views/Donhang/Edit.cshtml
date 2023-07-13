@@ -1,0 +1,57 @@
+﻿@model ASM.Models.Donhang
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3>Chỉnh sửa đơn hàng</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DonhangID" />
+           @* <div class="form-group">
+                <label asp-for="KhachhangID" class="control-label"></label>
+                <select asp-for="KhachhangID" class="form-control" asp-items="ViewBag.KhachhangID"></select>
+                <span asp-validation-for="KhachhangID" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Ngaydat" class="control-label"></label>
+                <input asp-for="Ngaydat" class="form-control" disabled/>
+                <span asp-validation-for="Ngaydat" class="text-danger"></span>
+            </div>
+            <div class="form-group" >
+                <label asp-for="Tongtien" class="control-label"></label>
+                <input asp-for="Tongtien" class="form-control" disabled/>
+                <span asp-validation-for="Tongtien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrangthaiDonhang" class="control-label"></label>
+                <select asp-for="TrangthaiDonhang" class="form-control">
+                    <option value="1">Mới đặt</option>
+                    <option value="2">Đang giao</option>
+                    <option value="3">Đã giao</option>
+                </select>
+                <span asp-validation-for="TrangthaiDonhang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ghichu" class="control-label"></label>
+                <textarea asp-for="Ghichu" class="form-control"></textarea>
+                @*<input asp-for="Ghichu" class="form-control" />*@
+                <span asp-validation-for="Ghichu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Quay về</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
